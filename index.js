@@ -238,6 +238,21 @@ Output: false  (doesn't meet requirement #3)
 Example 5:
 Input: s = ")()"
 Output: false  (doesn't meet requirement #3)
+
+Things to remember:
+Undersand the function signature: (isValid)
+Understand the constraints: (1 <= s.length <= 10^4)
+Understand the input/output: (parameter is a string/return is a boolean)
+Example 1: a single parenthesis; s = '('; output = false (because odd or not a pair)
+Example 2: s = '()'; output = true
+Example 3: s = '(())'; output = true
+Example 4: s = '[[['; output = false (open paranthesis are added to stack; this input will never give an empty stack; stack must be empty at end of algo for parenthesis to be valid)
+
+How to build algo:
+Use a stack
+When a open parenthesis (key) is encountered push it into the stack
+When a closing parentheis (value) is encountered, pop the last open parenthesis and check against current closing parenthesis to see if they match
+Query the value of popped element; do they match, then valid/true
 */
 
 var isValid = function(s) {
