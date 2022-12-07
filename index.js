@@ -255,40 +255,189 @@ When a closing parentheis (value) is encountered, pop the last open parenthesis 
 Query the value of popped element; do they match, then valid/true
 */
 
-var isValid = function(s) {
-  //edge case: return false if odd number of characters
-  if(s.length % 2 !== 0) return false;
-  //create an empty stack; only open brackets go in the stack
-  const stack = [];
-  //create map to define matching pairs
-  const match = new Map([
-    ['(', ')'],
-    ['{', '}'],
-    ['[', ']']
-  ]);
-  //loop through s (for every 'bracket' of input 's')
-  for(const bracket of s){
-    //if open parentheses, push to stack (if match has the current element in a key, push to stack)
-    if(match.has(bracket)){
-      stack.push(bracket);
-    //else if it's a closed bracket, see if the pairs match )
-    }else{
-      //if stack not empty, compare with top (last) bracket
-      if(stack.length !== 0){
-        //grab top bracket in variable 
-        const lastOpen = stack.pop();
-        //if match keys' value (lastOpen's value) is not equal to current element, return false
-        if(match.get(lastOpen) !== bracket){
-          return false;
-        }
-      //otherwise if stack is empty, return false
-      }else{
-        return false;
-      }
-    }
-  }
-  //return true if stack is empty (stack must be empty at end of algo for parenthesis to be valid)
-  return stack.length === 0;
-};
+// var isValid = function(s) {
+//   //edge case: return false if odd number of characters
+//   if(s.length % 2 !== 0) return false;
+//   //create an empty stack; only open brackets go in the stack
+//   const stack = [];
+//   //create map to define matching pairs
+//   const match = new Map([
+//     ['(', ')'],
+//     ['{', '}'],
+//     ['[', ']']
+//   ]);
+//   //loop through s (for every 'bracket' of input 's')
+//   for(const bracket of s){
+//     //if open parentheses, push to stack (if match has the current element in a key, push to stack)
+//     if(match.has(bracket)){
+//       stack.push(bracket);
+//     //else if it's a closed bracket, see if the pairs match )
+//     }else{
+//       //if stack not empty, compare with top (last) bracket
+//       if(stack.length !== 0){
+//         //grab top bracket in variable 
+//         const lastOpen = stack.pop();
+//         //if match keys' value (lastOpen's value) is not equal to current element, return false
+//         if(match.get(lastOpen) !== bracket){
+//           return false;
+//         }
+//       //otherwise if stack is empty, return false
+//       }else{
+//         return false;
+//       }
+//     }
+//   }
+//   //return true if stack is empty (stack must be empty at end of algo for parenthesis to be valid)
+//   return stack.length === 0;
+// };
 
-console.log(isValid(")()"));
+// console.log(isValid(")()"));
+//_______________________________________
+
+
+//Udemy:
+
+//see Node class at very top
+
+//Creates Stack structure; Last In First Out (LIFO)
+class StackTwo{
+  constructor(){
+    this.first = null;
+    this.last = null;
+    this.size = 0;
+  }
+
+  //adds a value to top of Stack and returns size
+  //the method accepts a value parameter
+  push(value){
+    //create a new node
+    const newNode = new Node(value);
+    //if the stack is empty {assign new node to first and last}
+    if(this.size === 0){
+      this.first = newNode;
+      this.last = newNode;
+      //else {grab original first node in variable, set new node to first's property, set new first's pointer to original first}
+    }else{
+      const originalFirst = this.first;
+      this.first = newNode;
+      this.first.next = originalFirst;
+    }
+    //increment size
+    this.size++;
+    //return stack size
+    return this.size;
+  }
+
+  //remove and return value from top of Stack
+  //the method does not take parameters
+  pop(){
+    //if the stack is empty {return null}
+    if(this.size === 0) return null;
+    //grab the first node to be removed in a variable
+    const removedFirst = this.first;
+    //if the stack has only 1 node {assign null to first and last}
+    if(this.size === 1){
+      this.first = null;
+      this.last = null;
+    //else {assign second node to first, assign null to removed node}
+    }else{
+    this.first = removedFirst.next;
+    removedFirst.next = null;
+    }
+    //decrement size
+    this.size--;
+    //return removed node's value
+    return removedFirst.value;
+  }
+
+  printListArray(){
+    let array = [];
+    let currentNode = this.first;
+    while(currentNode !== null){
+      array.push(currentNode.value);
+      currentNode = currentNode.next;
+    }
+    return array;
+  }
+}
+
+// const stackTwo = new StackTwo();
+// stackTwo.push(1);
+// stackTwo.push(2);
+// stackTwo.push(3);
+// stackTwo.push(4);
+// stackTwo.push(5);
+// // console.log(stackTwo.pop());
+
+// console.log(stackTwo);
+// console.log(stackTwo.printListArray());
+//______________________________________
+
+//Creates Queue structure; First In First Out (FIFO)
+class QueueTwo{
+  constructor(){
+    this.first = null;
+    this.last = null;
+    this.size = 0;
+  }
+
+  //adds value to end of Queue (last)
+  //the method accepts a value parameter
+  enqueue(value){
+    //create new node
+    const newNode = new Node(value);
+    //if queue is empty {assign new node to first and last}
+    if(this.size === 0){
+      this.first = newNode;
+      this.last = newNode;
+    //else {assign new node to last's pointer, assign new node to last}
+    }else{
+      this.last.next = newNode;
+      this.last = newNode;
+    }
+    //increment and return size
+    return ++this.size;
+  }
+
+  //removes and returns the value at the front of the Queue (first)
+  dequeue(){
+    //if Queue is empty, return null
+    if(this.size === 0) return null;
+    //grab first node to be removed in variable
+    const removedFirst = this.first;
+    //if Queue size is 1 {assign null to first and last}
+    if(this.size === 1){
+      this.first = null;
+      this.last = null;
+    //else {assign the second node to first, assign null to the removed node}
+    }else{
+      this.first = removedFirst.next;
+      removedFirst.next = null;
+    }
+    //decrement size
+    this.size--;
+    //return
+    return removedFirst.value;
+  }
+
+  printListArray(){
+    let array = [];
+    let currentNode = this.first;
+    while(currentNode !== null){
+      array.push(currentNode.value);
+      currentNode = currentNode.next;
+    }
+    return array;
+  }
+}
+
+const queueTwo = new QueueTwo();
+queueTwo.enqueue(1);
+queueTwo.enqueue(2);
+queueTwo.enqueue(3);
+queueTwo.enqueue(4);
+queueTwo.enqueue(5);
+console.log(queueTwo.dequeue());
+
+console.log(queueTwo);
+console.log(queueTwo.printListArray());
