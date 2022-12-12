@@ -302,7 +302,9 @@ Query the value of popped element; do they match, then valid/true
 //Creates Stack structure; Last In First Out (LIFO)
 class StackTwo{
   constructor(){
+    //node at top of Stack
     this.first = null;
+    //node at bottom of Stack
     this.last = null;
     this.size = 0;
   }
@@ -350,6 +352,26 @@ class StackTwo{
     return removedFirst.value;
   }
 
+  //returns value at the top of Stack
+  peek(){
+    //if stack empty, return null
+    if(this.size === 0) return null;
+    //return firsts value
+    return this.first.value;
+  }
+
+  //checks if Stack is empty or not
+  isEmpty(){
+    // returns Boolean if Stack size property is empty or not
+    return this.size === 0
+  }
+
+  // returns the number of values in the Stack
+  getSize(){
+    //return size property
+    return this.size;
+  }
+
   printListArray(){
     let array = [];
     let currentNode = this.first;
@@ -367,7 +389,8 @@ class StackTwo{
 // stackTwo.push(3);
 // stackTwo.push(4);
 // stackTwo.push(5);
-// // console.log(stackTwo.pop());
+// console.log(stackTwo.pop());
+// console.log(stackTwo.peek());
 
 // console.log(stackTwo);
 // console.log(stackTwo.printListArray());
@@ -376,7 +399,9 @@ class StackTwo{
 //Creates Queue structure; First In First Out (FIFO)
 class QueueTwo{
   constructor(){
+    //node at front of Queue
     this.first = null;
+    //node at end of Queue
     this.last = null;
     this.size = 0;
   }
@@ -420,6 +445,26 @@ class QueueTwo{
     return removedFirst.value;
   }
 
+  //returns the value at the front of the Queue
+  peek(){
+    //edge case: if Queue is empty, return null
+    if(this.size === 0) return null;
+    //return the front nodes value
+    return this.first.value;
+  }
+
+  //checks if the Queue is empty or not
+  isEmpty(){
+    // returns Boolean if Queue size property is empty or not
+    return this.size === 0
+  }
+
+  //returns the number of values in the Queue
+  getSize(){
+    //return size property
+    return this.size;
+  }
+
   printListArray(){
     let array = [];
     let currentNode = this.first;
@@ -437,7 +482,8 @@ queueTwo.enqueue(2);
 queueTwo.enqueue(3);
 queueTwo.enqueue(4);
 queueTwo.enqueue(5);
-console.log(queueTwo.dequeue());
+// console.log(queueTwo.dequeue());
+// console.log(queueTwo.peek());
 
 console.log(queueTwo);
 console.log(queueTwo.printListArray());
